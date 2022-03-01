@@ -1,0 +1,6 @@
+D:\моя папка\институт\политех\АиСД\Laba_3\obj\Debug\Laba_3.csprojAssemblyReference.cache
+D:\моя папка\институт\политех\АиСД\Laba_3\bin\Debug\Laba_3.exe.config
+D:\моя папка\институт\политех\АиСД\Laba_3\bin\Debug\Laba_3.exe
+D:\моя папка\институт\политех\АиСД\Laba_3\bin\Debug\Laba_3.pdb
+D:\моя папка\институт\политех\АиСД\Laba_3\obj\Debug\Laba_3.exe
+D:\моя папка\институт\политех\АиСД\Laba_3\obj\Debug\Laba_3.pdb
