@@ -3,5 +3,4 @@ D:\моя папка\институт\политех\АиСД\Laba_2\bin\Debug\L
 D:\моя папка\институт\политех\АиСД\Laba_2\bin\Debug\Laba_2.pdb
 D:\моя папка\институт\политех\АиСД\Laba_2\obj\Debug\Laba_2.exe
 D:\моя папка\институт\политех\АиСД\Laba_2\obj\Debug\Laba_2.pdb
-D:\моя папка\институт\политех\АиСД\Laba_2\bin\Debug\Laba_2.exe.CodeAnalysisLog.xml
-D:\моя папка\институт\политех\АиСД\Laba_2\bin\Debug\Laba_2.exe.lastcodeanalysissucceeded
+D:\моя папка\институт\политех\АиСД\Laba_2\obj\Debug\Laba_2.csprojAssemblyReference.cache

@@ -1,18 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading;
 
 namespace Laba_2
 {
     class Program
     {
+
         static void Main(string[] args)
         {
             int n, W;
+           
             Console.WriteLine("Введите количество предметов в рюкзаке и максимальный вес");
             n = Convert.ToInt32(Console.ReadLine());
             W = Convert.ToInt32(Console.ReadLine());
             BackpackTask task = new BackpackTask(n, W);
-            task.Print();
+            task.Print(); 
+            
             task.knapsack_din();
             task.knapsack_greedy();
             sq_array();
@@ -24,8 +29,11 @@ namespace Laba_2
             Console.WriteLine("Стало: " + a[0] + " " + a[1] + " " + a[2]);
             Console.ReadKey();
         }
+       
         public static void sq_array()
         {
+            Stopwatch stopWatch = Stopwatch.StartNew();
+            stopWatch.Start();
             char[,] array = new char[5, 5];
             for (int i = 0; i < 5; i++)
             {
@@ -36,9 +44,15 @@ namespace Laba_2
                 }
                 Console.Write("\n");
             }
+            stopWatch.Stop();
+            BackpackTask task = new BackpackTask(0, 0);
+            task.time(stopWatch);
         }
         static int BinarySearch(int[] array, int searchedValue, int left, int right)
         {
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
             while (left <= right)
             {
                 var middle = (left + right) / 2;
@@ -56,10 +70,15 @@ namespace Laba_2
                     left = middle + 1;
                 }
             }
+            BackpackTask task = new BackpackTask(0, 0);
+            task.time(stopWatch);
             return -1;
         }
         public static string[] RadixSort(string[] a, int k, int n, int m)
         {
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
             for (int i = 0; i < k; i++)
             {
                 int[] c = new int[123];
@@ -88,6 +107,8 @@ namespace Laba_2
                 }
                 a = b;
             }
+            BackpackTask task = new BackpackTask(0, 0);
+            task.time(stopWatch);
             return a;
         }
     }

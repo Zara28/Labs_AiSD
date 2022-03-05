@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Threading;
 
 public class BackpackTask
 {
@@ -31,9 +33,18 @@ public class BackpackTask
 			Console.Write(weigth[i] + " ");
 		}
 	}
+	public void time(Stopwatch stopWatch)
+	{
+		TimeSpan ts = stopWatch.Elapsed;
+		string elapsedTime = Convert.ToString(ts.Ticks);
+		//	ts.Hours)+":"+ Convert.ToString(ts.Minutes)+":"+ Convert.ToString(ts.Seconds)+":"+ Convert.ToString(ts.Milliseconds);
+		Console.WriteLine("\n Время выполнения алгоритма: " + elapsedTime);
+	}
 	//Необходимо подобрать такой набор вещей, чтобы он помещался в рюкзаке и имел максимальную ценность (стоимость).
 	public void knapsack_din()
 	{
+		Stopwatch stopWatch = new Stopwatch();
+		stopWatch.Start();
 		int[] mas = new int[Weight + 1];
 		mas[0] = 0;
 		for (int w = 1; w <= Weight; w++)
@@ -48,9 +59,13 @@ public class BackpackTask
 			}
 		}
 		Console.WriteLine("\nМаксимальная цена рюкзака " + mas[Weight]);
+		stopWatch.Stop();
+		time(stopWatch);
 	}
 	public void knapsack_greedy()
 	{
+		Stopwatch stopWatch = new Stopwatch();
+		stopWatch.Start();
 		int[] knapsack = new int [Weight+100];
 		for(int i = 0; i<weigth.Length; i++)
 		{
@@ -79,6 +94,8 @@ public class BackpackTask
 		}
 		int result = Math.Max(cost, max_c);
 		Console.WriteLine("\nМаксимальная цена рюкзака " + result);
+		stopWatch.Stop();
+		time(stopWatch);
 	}
 
 }
