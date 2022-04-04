@@ -24,25 +24,24 @@ namespace Laba_3
             {
                 heapify(i);
             }
+
         }
         public void addelem(int n) // добавление элемента кучи
     {
-            int i, parent;
-            i = HeapSize-1;
-            h[i] = n;
-            parent = (i - 1) / 2;
-            while (parent >= 0 && i > 0)
+            int y, parent;
+            y = HeapSize;
+            h[y] = n;
+
+            for (int i = HeapSize; i >= 0; i--)
             {
-                if (h[i] > h[parent])
-                {
-                    int temp = h[i];
-                    h[i] = h[parent];
-                    h[parent] = temp;
-                }
-                i = parent;
-                parent = (i - 1) / 2;
+                heapify(i);
             }
+           
             HeapSize++;
+            for (int i = HeapSize / 2; i >= 0; i--)
+            {
+                heapify(i);
+            }
         }
         public void outHeap()// вывод элементов кучи в форме кучи
     {
@@ -53,6 +52,10 @@ namespace Laba_3
                 while ((i < k) && (i < HeapSize))
                 {
                    Console.Write(h[i] + " ");
+                    if(i%2!=0)
+                    {
+                        Console.Write("    ");
+                    }
                     i++;
                 }
                 Console.Write("\n");
