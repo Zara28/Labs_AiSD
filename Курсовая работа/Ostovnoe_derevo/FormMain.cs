@@ -24,7 +24,7 @@ namespace Ostovnoe_derevo
         List<Edge> DeleteMST = new List<Edge>();
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+
             //graph.AddEdge(graph.vertices[0], graph.vertices[6], 2);
             //graph.AddEdge(graph.vertices[2], graph.vertices[6], 15);
             //graph.AddEdge(graph.vertices[1], graph.vertices[3], 10);
@@ -33,7 +33,6 @@ namespace Ostovnoe_derevo
             //graph.AddEdge(graph.vertices[5], graph.vertices[6], 6);
             //graph.AddEdge(graph.vertices[1], graph.vertices[6], 18);
             //pictureBox1.Image = Draw(graph.edges);
-           
            
             
         }
@@ -65,6 +64,9 @@ namespace Ostovnoe_derevo
                 }
                 else
                 {
+                    pictureBox1.Image = Draw(DeleteMST);
+                    pictureBox1.Refresh();
+                    Thread.Sleep(1000);
                     continue;
                 }
                
@@ -93,7 +95,7 @@ namespace Ostovnoe_derevo
             List<Edge> List_edges = new List<Edge>();
             foreach(Vertex v in graph.vertices)
             {
-                List_edges = graph.edges.Where(e=>e.FirstPoint == v).Select(e=>e).ToList();
+                List_edges = graph.edges.Where(e=>e.FirstPoint == v || e.SecondPoint == v).Select(e=>e).ToList();
                 int min = 1000;
                 Edge min_e = null;
                 foreach(Edge e in List_edges)
@@ -301,18 +303,29 @@ namespace Ostovnoe_derevo
 
         private void button_Random_Click(object sender, EventArgs e)
         {
+            
+            graph.edges.Clear();
+            graph.vertices.Clear();
             graph.Create(Convert.ToInt32(textBox_Count.Text));
+            pictureBox2.Image = Draw(graph.edges);
             
         }
 
         private void buttonCreate_Click(object sender, EventArgs e)
         {
-            
-            if(textBox_Count.Text!=null)
+            graph.edges.Clear();
+            graph.vertices.Clear();
+            buttonSave.Visible = true;
+            var controls = panel2.Controls.OfType<TextBox>().Select(c => c).ToList();
+            foreach(TextBox text in controls)
+            {
+                panel2.Controls.Remove(text);
+            }
+            if (textBox_Count.Text!=null)
             {
                 int count = Convert.ToInt32(textBox_Count.Text);
                 graph.Create(count);
-                for (int i = 0; i < count; i++)
+                for (int i = 0; i < count-1; i++)
                 {
                     TextBox ver1 = new TextBox();
                     ver1.Name = "ver1" + i;
@@ -322,15 +335,107 @@ namespace Ostovnoe_derevo
                     ver2.Name = "ver2" + i;
                     ver2.Location = new Point(105, 100 + i * 30);
                     ver2.Size = new Size(50, 10);
+                    TextBox verd = new TextBox();
+                    verd.Name = "verd" + i;
+                    verd.Location = new Point(160, 100 + i * 30);
+                    verd.Size = new Size(50, 10);
                     Label label = new Label();
                     label.Text = "Ребро " + (i + 1);
-                    label.Location = new Point(160, 100 + i * 30);
+                    label.Location = new Point(200, 100 + i * 30);
                     panel2.Controls.Add(label);
                     panel2.Controls.Add(ver1);
                     panel2.Controls.Add(ver2);
+                    panel2.Controls.Add(verd);
                 }
+                
             }
             
+        }
+       
+
+        private void buttonSave_Click(object sender, EventArgs e)
+        {
+            int count = Convert.ToInt32(textBox_Count.Text);
+            var controls = panel2.Controls.OfType<TextBox>().Select(c=>c).ToList();
+            int f = count;
+            int s = count;
+            int w = 0;
+            for (int i = 0; i < count-1; i++)
+            {
+                
+                foreach(TextBox text in controls)
+                {
+                    if(text.Name== "ver1" + i)
+                    {
+                        f = Convert.ToInt32(text.Text) - 1;
+                    }
+                    if (text.Name == "ver2" + i)
+                    {
+                        s = Convert.ToInt32(text.Text) - 1;
+                    }
+                    if (text.Name == "verd" + i)
+                    {
+                        w = Convert.ToInt32(text.Text);
+                    }
+
+                }
+                graph.AddEdge(graph.vertices[f], graph.vertices[s], w);
+             
+            }
+            pictureBox2.Image = Draw(graph.edges);
+        }
+
+        private void button_Add_Click(object sender, EventArgs e)
+        {
+            Random random = new Random();
+            Vertex ver = new Vertex(Convert.ToInt32(textBox_Add_Ver.Text), false, random.Next(25, 700), random.Next(25, 300), Color.Green);
+            graph.AddVertex(ver);
+            graph.AddEdge(ver, graph.vertices[Convert.ToInt32(textBox_edge_New_Ver.Text)], random.Next(100));
+            pictureBox3.Image = Draw(graph.edges);
+        }
+
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+            List<Edge> edges = new List<Edge>();
+            int name = Convert.ToInt32(textBox_Add_Ver.Text)-1;
+            foreach(Edge edge in graph.edges)
+            {
+                
+                if(edge.FirstPoint.Name != name && edge.SecondPoint.Name != name)
+                {
+                    edges.Add(edge);
+                }
+            }
+            graph.edges = edges;
+            pictureBox3.Image = Draw(graph.edges);
+            Text_Graph();
+        }
+
+        private void buttonAddEdge_Click(object sender, EventArgs e)
+        {
+            int f = Convert.ToInt32(textBox_f.Text) - 1;
+            int s = Convert.ToInt32(textBox_s.Text) - 1;
+            int w = Convert.ToInt32(textBox_s.Text) - 1;
+            graph.AddEdge(graph.vertices[f], graph.vertices[s], w);
+            Text_Graph();
+        }
+
+        private void buttonDeleteEdge_Click(object sender, EventArgs e)
+        {
+            int f = Convert.ToInt32(textBox_f.Text) - 1;
+            int s = Convert.ToInt32(textBox_s.Text) - 1;
+            int w = Convert.ToInt32(textBox_s.Text) - 1;
+            graph.edges.Remove(new Edge(graph.vertices[f], graph.vertices[s], w));
+            Text_Graph();
+        }
+        public void Text_Graph()
+        {
+            labelVer.Text = "Список вершин"+Environment.NewLine + graph.GetVertex(graph.edges);
+            labelEdge.Text = "Список ребер" + Environment.NewLine;
+            foreach(Edge e in graph.edges)
+            {
+                labelEdge.Text += e.FirstPoint.Name.ToString()+"-"+e.SecondPoint.Name.ToString()+Environment.NewLine;
+            }    
         }
     }
 }

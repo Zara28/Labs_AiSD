@@ -11,6 +11,7 @@ namespace Laba_6
         static void Main(string[] args)
         {
             int k = 0;
+            Console.WriteLine(k);
             Queue<string> sornames = new Queue<string>();
             for (int i = 0; i<5; i++)
             {

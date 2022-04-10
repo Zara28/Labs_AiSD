@@ -16,28 +16,49 @@ namespace Ostovnoe_derevo
         public void Create(int count)
         {
             Random r = new Random();
-            int x = 50;
-            int y = 150;
+            int x = 25;
+            int y = 50;
 
-            int deltaX = 100;
+            int deltaX = 60;
             int deltaY = 60;
             for (int i = 0; i < count; i++)
             {
-                if (x > 400)
+                if (x > 300 || x<25)
                 {
                     deltaX = -deltaX;
                 }
-                if (y > 300)
+                if (y > 300|| y<50)
                 {
                     deltaY = -deltaY;
                 }
-                x += deltaX;
-                y += deltaY;
+                x += deltaX+r.Next(20);
+                y += deltaY- +r.Next(20);
 
                 SolidBrush _Srush = (SolidBrush)Brushes.Violet;
                 _Srush.Color = Color.FromArgb(255 - i * 15, 255, 1 + i * 20);
                 AddVertex(new Vertex(i, false, x, y, _Srush.Color));
             }
+            while(!Svyznost(edges))
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    int ind = r.Next(0, count - 1);
+                    while (ind == i)
+                    {
+                        ind = r.Next(0, count - 1);
+                    }
+                    foreach (Edge e in edges)
+                    {
+                        if (e.FirstPoint == vertices[ind] && e.SecondPoint == vertices[i])
+                        {
+                            ind = r.Next(0, count - 1);
+                        }
+                    }
+                    AddEdge(vertices[i], vertices[ind], r.Next(100));
+
+                }
+            }
+            
         }
         public void AddVertex(Vertex vertex)
         {
@@ -59,7 +80,7 @@ namespace Ostovnoe_derevo
         public bool Svyznost(List<Edge> edge)
         {
             Update();
-            DFD(vertices[6], edge);
+            DFD(vertices[0], edge);
             foreach(Vertex v in vertices)
             {
                 if(v.IsChecked==false)
